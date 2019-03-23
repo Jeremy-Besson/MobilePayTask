@@ -1,21 +1,18 @@
 ﻿using JeremyBesson.MobilePayApp.Models;
 using System;
-using System.Globalization;
 
 namespace JeremyBesson.MobilePayApp.Helpers
 {
     public static class TransactionConvertor
     {
-        private static readonly NumberFormatInfo Nfi = new NumberFormatInfo { NumberDecimalSeparator = "." };
-
-        public static Transaction Convert(string fileLine)
+        public static Transaction Convert(string transactionString)
         {
-            fileLine = fileLine.Trim();
-            while (fileLine.Contains("/t")) fileLine = fileLine.Replace("/t", " ");
-            while (fileLine.Contains("  ")) fileLine = fileLine.Replace("  ", " ");
+            transactionString = transactionString.Trim();
+            while (transactionString.Contains("/t")) transactionString = transactionString.Replace("/t", " ");
+            while (transactionString.Contains("  ")) transactionString = transactionString.Replace("  ", " ");
 
             Transaction transaction;
-            if (string.IsNullOrEmpty(fileLine.Trim()))
+            if (string.IsNullOrEmpty(transactionString.Trim()))
             {
                  transaction= new Transaction()
                  {
@@ -24,12 +21,12 @@ namespace JeremyBesson.MobilePayApp.Helpers
             }
             else
             {
-                var c = fileLine.Split(' ');
+                var c = transactionString.Split(' ');
                 transaction = new Transaction()
                 {
                     Date = DateTime.Parse(c[0]),
                     MerchantName = c[1],
-                    Amount = double.Parse(c[2], Nfi),
+                    Amount = double.Parse(c[2], NumberFormat.Nfi),
                 };
             }
 
@@ -39,7 +36,7 @@ namespace JeremyBesson.MobilePayApp.Helpers
         public static string Convert(Transaction transaction)
         {
             return
-                $"{transaction.Date:yyyy-MM-dd} {transaction.MerchantName} {transaction.Amount.ToString("0.00", Nfi)}";
+                $"{transaction.Date:yyyy-MM-dd} {transaction.MerchantName} {transaction.Amount.ToString("0.00", NumberFormat.Nfi)}";
         }
     }
 }

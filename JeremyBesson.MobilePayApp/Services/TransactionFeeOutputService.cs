@@ -1,6 +1,7 @@
 ﻿using JeremyBesson.MobilePayApp.Models;
 using System;
 using System.Globalization;
+using JeremyBesson.MobilePayApp.Helpers;
 
 namespace JeremyBesson.MobilePayApp.Services
 {
@@ -10,9 +11,8 @@ namespace JeremyBesson.MobilePayApp.Services
         {
             if (transactionFee != null)
             {
-                var nfi = new NumberFormatInfo { NumberDecimalSeparator = "." };
-                Console.WriteLine(
-                    $"{transactionFee.Date:yyyy-MM-dd} {transactionFee.MerchantName} {transactionFee.Amount.ToString("##0.00", nfi)}");
+                var output = TransactionFeeConvertor.Convert(transactionFee);
+                Console.WriteLine(output);
             }
             else
             {

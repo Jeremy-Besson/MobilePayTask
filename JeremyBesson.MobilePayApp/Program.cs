@@ -1,7 +1,7 @@
-﻿using JeremyBesson.MobilePayApp.Services;
+﻿using JeremyBesson.MobilePayApp.Models;
+using JeremyBesson.MobilePayApp.Services;
 using System;
 using System.IO;
-using JeremyBesson.MobilePayApp.Models;
 
 namespace JeremyBesson.MobilePayApp
 {
@@ -29,7 +29,7 @@ namespace JeremyBesson.MobilePayApp
                     }
                 }
             }
-            catch (FileNotFoundException )
+            catch (FileNotFoundException)
             {
                 Console.WriteLine($"The 'transactions.txt' file is missing");
             }
