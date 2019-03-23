@@ -10,8 +10,4 @@
     <Optimize>false</Optimize>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="xunit" Version="2.4.1" />
-  </ItemGroup>
-
 </Project>

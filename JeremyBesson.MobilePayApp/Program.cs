@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using JeremyBesson.MobilePayApp.Services;
+using System;
+using System.IO;
 using JeremyBesson.MobilePayApp.Models;
-using JeremyBesson.MobilePayApp.Services;
 
 namespace JeremyBesson.MobilePayApp
 {
@@ -9,29 +9,33 @@ namespace JeremyBesson.MobilePayApp
     {
         static void Main(string[] args)
         {
-#if DEBUG
-            Console.WriteLine("Transactions:");
-            var transactionSender = new TransactionSenderService();
-            using (var transactions = new TransactionEnumeratorService().GetEnumerator())
+            try
             {
-                while (transactions.MoveNext())
+                var enumeratorService = new TransactionEnumeratorService();
+                var feeCalculator = new TransactionFeeCalculatorService();
+                var feeSender = new TransactionFeeOutputService();
+
+                using (var transactions = enumeratorService.GetEnumerator())
                 {
-                    transactionSender.Send(transactions.Current);
+                    while (transactions.MoveNext())
+                    {
+                        var current = transactions.Current;
+                        TransactionFee fee = null;
+                        if (!current.IsEmpty)
+                        {
+                            fee = feeCalculator.CalculateFee(current);
+                        }
+                        feeSender.Send(fee);
+                    }
                 }
             }
-            Console.WriteLine("");
-            Console.WriteLine("Transaction fees:");
-#endif
-
-            var feeCalculator = new TransactionFeeCalculatorService();
-            var feeSender = new TransactionFeeSenderService();
-            using (var transactions = new TransactionEnumeratorService().GetEnumerator())
+            catch (FileNotFoundException )
             {
-                while (transactions.MoveNext())
-                {
-                    var fee = feeCalculator.CalculateFee(transactions.Current);
-                    feeSender.Send(fee);
-                }
+                Console.WriteLine($"The 'transactions.txt' file is missing");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Oups: Something went wrong: {ex.Message}");
             }
 
             Console.ReadLine();

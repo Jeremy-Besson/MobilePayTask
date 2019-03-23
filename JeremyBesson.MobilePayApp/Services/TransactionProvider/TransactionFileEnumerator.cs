@@ -20,10 +20,6 @@ namespace JeremyBesson.MobilePayApp.Services.TransactionProvider
         public bool MoveNext()
         {
             _line = _streamReader.ReadLine();
-            while (_line != null && JeremyBesson.MobilePayApp.Helpers.TransactionConvertor.IsEmptyLine(_line))
-            {
-                _line = _streamReader.ReadLine();
-            }
             return _line != null;
         }
 
