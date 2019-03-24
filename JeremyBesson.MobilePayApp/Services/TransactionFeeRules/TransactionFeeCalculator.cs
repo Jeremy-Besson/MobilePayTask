@@ -5,18 +5,18 @@ namespace JeremyBesson.MobilePayApp.Services.TransactionFeeRules
 {
     public class TransactionFeeCalculator
     {
-        private readonly List<IFeeCalculator> _feeCalculators;
+        private readonly List<IFeeRule> _feeRules;
 
-        public TransactionFeeCalculator(List<IFeeCalculator> feeCalculators)
+        public TransactionFeeCalculator(List<IFeeRule> feeRules)
         {
-            _feeCalculators = feeCalculators;
+            _feeRules = feeRules;
         }
 
         public TransactionFee CalculateFee(Transaction transaction)
         {
             var fee = 0.0;
             var lastFee = 0.0;
-            _feeCalculators.ForEach(
+            _feeRules.ForEach(
                 feeCalculator =>
                 {
                     lastFee = feeCalculator.ComputeFee(transaction, lastFee);

@@ -31,11 +31,11 @@ namespace JeremyBesson.MobilePayApp
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine($"The 'transactions.txt' file is missing");
+                Console.WriteLine("The 'transactions.txt' file is missing");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Oups: Something went wrong: {ex.Message}");
+                Console.WriteLine($"Something went wrong: {ex.Message}");
             }
 
             Console.ReadLine();

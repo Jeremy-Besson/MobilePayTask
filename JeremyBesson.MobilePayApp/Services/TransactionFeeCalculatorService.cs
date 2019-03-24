@@ -8,9 +8,9 @@ namespace JeremyBesson.MobilePayApp.Services
     {
         private const double TransactionFeePercentage = 0.01;
 
-        private readonly List<IFeeCalculator> _feeCalculators = new List<IFeeCalculator>()
+        private readonly List<IFeeRule> _feeCalculators = new List<IFeeRule>()
         {
-            new FeeCalculatorWithDiscount(new FeeCalculator((x,y) =>  x.Amount * TransactionFeePercentage), 
+            new FeeRuleWithDiscount(new FeeRule((x,y) =>  x.Amount * TransactionFeePercentage), 
                 new List<IDiscountRule>()
                 {
                     new MerchantDiscountRule("TELIA",0.1),
@@ -18,7 +18,7 @@ namespace JeremyBesson.MobilePayApp.Services
                 }
                 ),
 
-            new MonthlyInvoiceFeeCalculator(),
+            new MonthlyInvoiceFeeRule(),
         };
 
         private readonly TransactionFeeCalculator _feeCalculator;

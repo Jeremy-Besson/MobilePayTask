@@ -3,11 +3,11 @@ using JeremyBesson.MobilePayApp.Models;
 
 namespace JeremyBesson.MobilePayApp.Services.TransactionFeeRules
 {
-    public class FeeCalculator : IFeeCalculator
+    public class FeeRule : IFeeRule
     {
         private readonly Func<Transaction, double,double> _feeCalculator;
 
-        public FeeCalculator(Func<Transaction,double,double> feeCalculator)
+        public FeeRule(Func<Transaction,double,double> feeCalculator)
         {
             _feeCalculator = feeCalculator;
         }

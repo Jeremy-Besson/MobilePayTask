@@ -5,14 +5,13 @@ using System.Collections.Generic;
 
 namespace JeremyBesson.MobilePayApp.Services
 {
-
     public class TransactionEnumeratorService : IEnumerable<Transaction>
     {
-        private readonly string fileName = "transactions.txt";
+        private const string FileName = "transactions.txt";
 
         public IEnumerator<Transaction> GetEnumerator()
         {
-            return new TransactionFileEnumerator(fileName);
+            return new TransactionFileEnumerator(FileName);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

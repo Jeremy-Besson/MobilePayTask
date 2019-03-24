@@ -1,9 +1,7 @@
 ﻿using JeremyBesson.MobilePayApp.Models;
-using JeremyBesson.MobilePayApp.Services.TransactionProvider;
+using JeremyBesson.MobilePayApp.Services.TransactionFeeRules;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using JeremyBesson.MobilePayApp.Services.TransactionFeeRules;
 using Xunit;
 
 namespace JeremyBesson.MobilePayApp.Tests
@@ -25,7 +23,7 @@ namespace JeremyBesson.MobilePayApp.Tests
             };
 
             //Act
-            var transactionFeeCalculator = new TransactionFeeCalculator(new List<IFeeCalculator>());
+            var transactionFeeCalculator = new TransactionFeeCalculator(new List<IFeeRule>());
             var fee = transactionFeeCalculator.CalculateFee(transaction);
 
             //Assert
@@ -47,9 +45,9 @@ namespace JeremyBesson.MobilePayApp.Tests
 
             //Act
             var transactionFeeCalculator = new TransactionFeeCalculator(
-                new List<IFeeCalculator>()
+                new List<IFeeRule>()
                 {
-                    new FeeCalculator((x,y) =>  x.Amount * BaseFeePercentage),
+                    new FeeRule((x,y) =>  x.Amount * BaseFeePercentage),
                 }
                 );
             var fee = transactionFeeCalculator.CalculateFee(transaction);
@@ -74,9 +72,9 @@ namespace JeremyBesson.MobilePayApp.Tests
 
             //Act
             var transactionFeeCalculator = new TransactionFeeCalculator(
-                new List<IFeeCalculator>()
+                new List<IFeeRule>()
                 {
-                    new FeeCalculatorWithDiscount(new FeeCalculator((x,y) =>  x.Amount * BaseFeePercentage),
+                    new FeeRuleWithDiscount(new FeeRule((x,y) =>  x.Amount * BaseFeePercentage),
                         new List<IDiscountRule>()
                         {
                             new MerchantDiscountRule(companyName,0.1),
@@ -107,9 +105,9 @@ namespace JeremyBesson.MobilePayApp.Tests
 
             //Act
             var transactionFeeCalculator = new TransactionFeeCalculator(
-                new List<IFeeCalculator>()
+                new List<IFeeRule>()
                 {
-                    new FeeCalculatorWithDiscount(new FeeCalculator((x,y) =>  x.Amount * BaseFeePercentage),
+                    new FeeRuleWithDiscount(new FeeRule((x,y) =>  x.Amount * BaseFeePercentage),
                         new List<IDiscountRule>()
                         {
                             new MerchantDiscountRule(companyName,discount),
@@ -137,9 +135,9 @@ namespace JeremyBesson.MobilePayApp.Tests
 
             //Act
             var transactionFeeCalculator = new TransactionFeeCalculator(
-                new List<IFeeCalculator>()
+                new List<IFeeRule>()
                 {
-                    new FeeCalculatorWithDiscount(new FeeCalculator((x,y) =>  x.Amount * BaseFeePercentage),
+                    new FeeRuleWithDiscount(new FeeRule((x,y) =>  x.Amount * BaseFeePercentage),
                         new List<IDiscountRule>()
                         {
                             new DiscountRule( x => 1000),
@@ -180,10 +178,10 @@ namespace JeremyBesson.MobilePayApp.Tests
 
             //Act
             var transactionFeeCalculator = new TransactionFeeCalculator(
-                new List<IFeeCalculator>()
+                new List<IFeeRule>()
                 {
-                    new FeeCalculator((x,y) =>  x.Amount * BaseFeePercentage),
-                    new MonthlyInvoiceFeeCalculator()
+                    new FeeRule((x,y) =>  x.Amount * BaseFeePercentage),
+                    new MonthlyInvoiceFeeRule()
                 }
             );
 
@@ -212,9 +210,9 @@ namespace JeremyBesson.MobilePayApp.Tests
 
             //Act
             var transactionFeeCalculator = new TransactionFeeCalculator(
-                new List<IFeeCalculator>()
+                new List<IFeeRule>()
                 {
-                    new MonthlyInvoiceFeeCalculator()
+                    new MonthlyInvoiceFeeRule()
                 }
             );
             var fee1 = transactionFeeCalculator.CalculateFee(transaction1);

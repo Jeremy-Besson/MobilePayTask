@@ -3,20 +3,20 @@ using JeremyBesson.MobilePayApp.Models;
 
 namespace JeremyBesson.MobilePayApp.Services.TransactionFeeRules
 {
-    public class FeeCalculatorWithDiscount : IFeeCalculator
+    public class FeeRuleWithDiscount : IFeeRule
     {
         private readonly List<IDiscountRule> _discounts;
-        private readonly IFeeCalculator _calculator;
+        private readonly IFeeRule _rule;
 
-        public FeeCalculatorWithDiscount(IFeeCalculator feeCalculator, List<IDiscountRule> discounts)
+        public FeeRuleWithDiscount(IFeeRule feeRule, List<IDiscountRule> discounts)
         {
-            _calculator = feeCalculator;
+            _rule = feeRule;
             _discounts = discounts;
         }
 
         public double ComputeFee(Transaction transaction, double currentFee)
         {
-            var initialFee = _calculator.ComputeFee(transaction, currentFee);
+            var initialFee = _rule.ComputeFee(transaction, currentFee);
             var discount = 0.0;
 
             _discounts?.ForEach(

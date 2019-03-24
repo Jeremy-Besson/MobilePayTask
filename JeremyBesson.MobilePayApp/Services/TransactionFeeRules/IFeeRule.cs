@@ -2,7 +2,7 @@
 
 namespace JeremyBesson.MobilePayApp.Services.TransactionFeeRules
 {
-    public interface IFeeCalculator
+    public interface IFeeRule
     {
         double ComputeFee(Transaction transaction, double currentFee);
     }

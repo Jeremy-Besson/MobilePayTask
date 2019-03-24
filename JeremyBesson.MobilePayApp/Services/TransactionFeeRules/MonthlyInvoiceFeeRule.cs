@@ -3,7 +3,7 @@ using JeremyBesson.MobilePayApp.Models;
 
 namespace JeremyBesson.MobilePayApp.Services.TransactionFeeRules
 {
-    public class MonthlyInvoiceFeeCalculator : IFeeCalculator
+    public class MonthlyInvoiceFeeRule : IFeeRule
     {
         private const double MonthlyFixedCost = 29;
 
