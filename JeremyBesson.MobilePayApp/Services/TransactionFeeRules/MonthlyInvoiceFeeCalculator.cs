@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using JeremyBesson.MobilePayApp.Models;
 
-namespace JeremyBesson.MobilePayApp.Services.FeeRules
+namespace JeremyBesson.MobilePayApp.Services.TransactionFeeRules
 {
-    public class MonthlyFeeCalculator : IFeeCalculator
+    public class MonthlyInvoiceFeeCalculator : IFeeCalculator
     {
         private const double MonthlyFixedCost = 29;
 
-        private readonly Dictionary<string,int> _monthlyPayedFees = new Dictionary<string, int>();
+        private readonly Dictionary<string,int> _monthlyPayedInvoiceFees = new Dictionary<string, int>();
 
         public double ComputeFee(Transaction transaction, double currentFee)
         {
@@ -17,9 +17,9 @@ namespace JeremyBesson.MobilePayApp.Services.FeeRules
             {
                 var lastPayedMonth = -1;
 
-                if (_monthlyPayedFees.ContainsKey(transaction.MerchantName))
+                if (_monthlyPayedInvoiceFees.ContainsKey(transaction.MerchantName))
                 {
-                    lastPayedMonth = _monthlyPayedFees[transaction.MerchantName];
+                    lastPayedMonth = _monthlyPayedInvoiceFees[transaction.MerchantName];
                 }
 
                 if (lastPayedMonth != transaction.Date.Month)
@@ -27,7 +27,7 @@ namespace JeremyBesson.MobilePayApp.Services.FeeRules
                     additionalFee = MonthlyFixedCost;
                 }
 
-                _monthlyPayedFees[transaction.MerchantName] = transaction.Date.Month;
+                _monthlyPayedInvoiceFees[transaction.MerchantName] = transaction.Date.Month;
             }
 
             return additionalFee;

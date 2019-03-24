@@ -1,6 +1,6 @@
 ﻿using JeremyBesson.MobilePayApp.Models;
 using System.Collections.Generic;
-using JeremyBesson.MobilePayApp.Services.FeeRules;
+using JeremyBesson.MobilePayApp.Services.TransactionFeeRules;
 
 namespace JeremyBesson.MobilePayApp.Services
 {
@@ -18,7 +18,7 @@ namespace JeremyBesson.MobilePayApp.Services
                 }
                 ),
 
-            new MonthlyFeeCalculator(),
+            new MonthlyInvoiceFeeCalculator(),
         };
 
         private readonly TransactionFeeCalculator _feeCalculator;

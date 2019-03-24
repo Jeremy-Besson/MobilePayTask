@@ -1,9 +1,9 @@
 ﻿using JeremyBesson.MobilePayApp.Models;
-using JeremyBesson.MobilePayApp.Services.FeeRules;
 using JeremyBesson.MobilePayApp.Services.TransactionProvider;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using JeremyBesson.MobilePayApp.Services.TransactionFeeRules;
 using Xunit;
 
 namespace JeremyBesson.MobilePayApp.Tests
@@ -12,14 +12,6 @@ namespace JeremyBesson.MobilePayApp.Tests
     {
 
         private const double BaseFeePercentage = 0.01;
-
-        [Fact]
-        public void WhenWrongFile_FileNotFoundException()
-        {
-            var exception = Record.Exception(() => new TransactionFileEnumerator("NOTFOUND.txt"));
-            Assert.NotNull(exception);
-            Assert.IsType<FileNotFoundException>(exception);
-        }
 
         [Fact]
         public void WhenNoFeeRule_FeeIsZero()
@@ -191,7 +183,7 @@ namespace JeremyBesson.MobilePayApp.Tests
                 new List<IFeeCalculator>()
                 {
                     new FeeCalculator((x,y) =>  x.Amount * BaseFeePercentage),
-                    new MonthlyFeeCalculator()
+                    new MonthlyInvoiceFeeCalculator()
                 }
             );
 
@@ -222,7 +214,7 @@ namespace JeremyBesson.MobilePayApp.Tests
             var transactionFeeCalculator = new TransactionFeeCalculator(
                 new List<IFeeCalculator>()
                 {
-                    new MonthlyFeeCalculator()
+                    new MonthlyInvoiceFeeCalculator()
                 }
             );
             var fee1 = transactionFeeCalculator.CalculateFee(transaction1);

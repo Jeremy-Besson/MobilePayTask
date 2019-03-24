@@ -1,7 +1,6 @@
-﻿using JeremyBesson.MobilePayApp.Models;
+﻿using JeremyBesson.MobilePayApp.Helpers;
+using JeremyBesson.MobilePayApp.Models;
 using System;
-using System.Globalization;
-using JeremyBesson.MobilePayApp.Helpers;
 
 namespace JeremyBesson.MobilePayApp.Services
 {

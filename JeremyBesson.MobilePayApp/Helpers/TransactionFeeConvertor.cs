@@ -1,6 +1,4 @@
 ﻿using JeremyBesson.MobilePayApp.Models;
-using System;
-using System.Globalization;
 
 namespace JeremyBesson.MobilePayApp.Helpers
 {
